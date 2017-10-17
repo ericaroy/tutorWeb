@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>{% block title %}{% endblock %} | Tutor Search</title>
+
+    <link rel='stylesheet' href='{{url_for('static', filename='admin.css')}}'> <!-- Important for Custom CSS!! -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel="stylesheet" href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'>
+    {% block extra_styles %}{% endblock %}
+
+    <script src='https://code.jquery.com/jquery-1.10.2.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Baloo+Tammudu|Lato" rel="stylesheet">
+
+  </head>
+
+<body>
+
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

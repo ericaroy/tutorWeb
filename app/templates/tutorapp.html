@@ -1,0 +1,39 @@
+{% extends "base.html" %} <!--Important!! -->
+
+{% block content_title %}Tutor Application{% endblock %}
+
+
+{% block content %}
+<br />
+<br />
+<div class="signUpForm">
+
+  <div class="signUpBox signUpInput">
+    <form action='{{ url_for('tutorapp') }}' method="post">
+    {% for field in form %}
+    {{ field.label }}
+     <div class='form-group{% if field.errors %} has-error has-feedback{% endif %}'>
+         {{ field(class='form-control') }}
+         {% if field.errors %}
+            <span class='glyphicon glyphicon-warning-sign form-control-feedback'></span>
+         {% endif %}
+         {% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+
+     </div>
+    {% endfor %}
+      <div class="">
+        <ul class="list-inline">
+          <li>
+            <input class="formButton" type="submit" value="Create" id="createButton"  name="createButton"/>
+
+          </li>
+          <li>
+            <a class="cancelButton" href='{{ url_for('index') }}'>Cancel</a>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

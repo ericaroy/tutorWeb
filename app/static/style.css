@@ -1,0 +1,250 @@
+body {
+	line-height: 1.4;
+	font-family: 'Roboto', sans-serif;
+    color: #67696c;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    overflow-x: hidden;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+.section-padding
+{
+    padding: 60px 0px;
+}
+
+.header
+{
+    background-image: url('/static/img/spiral.png');
+    background-size: cover;
+    min-height: 650px;
+    position: relative;
+	box-shadow: 0px 3px 8px #2a2a2a;
+}
+
+.navbar-default {
+    background-color: transparent;
+    border:0px;
+    padding: 20px 0;
+    transition: all 0.3s;
+}
+
+.top-nav-collapse {
+    padding: 0;
+    background: rgba(64,75,97, 0.9);
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+}
+
+.navbar-brand {
+    padding: 0px;
+    font-size: 24px;
+    text-transform: uppercase;
+    padding: 15px 0px;
+    margin-top: 6px;
+}
+.navbar-default .navbar-nav > li > a
+{
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 54px;
+    font-weight: 400;
+    text-transform: uppercase;
+    background: transparent;
+    color: #fff;
+    -webkit-transition: color 0.2s ease-out;
+    transition: color 0.2s ease-out;
+}
+
+.bannerHeader
+{
+    padding-top: 140px;
+    color: #fff;
+}
+
+.headerImgOverlay
+{
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 650px;
+}
+
+.headerTitle
+{
+    font-family: 'Roboto', sans-serif;
+}
+h1.headerTitle
+{
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+h2.headerTitle
+{
+    font-size: 45px;
+    text-transform: uppercase;
+    padding: 20px 0px;
+    font-weight: 700;
+}
+.headerSubTitle
+{
+    font-weight: 400;
+	font-size: 18px;
+}
+.headerButtons
+{
+    text-transform: uppercase;
+    margin-top: 50px;
+    color: #fff;
+    border: 0;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 24px;
+    padding: 10px 30px;
+    border-radius: 60px;
+    margin: 50px 10px 0 0;
+    outline: none !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: all 0.3s;
+	background-color: #6e2639;
+
+}
+.headerButtons:hover {
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.headerButtons:active {
+     background: #6e2639;
+}
+
+.glyphicon {
+    font-size: 50px;
+	padding-bottom: 20px;
+}
+
+.formContainer{
+	margin-top: 200px;
+
+}
+.box-inner {
+	padding-top: 50px;
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 80px;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+.sectionPad {
+    padding: 60px 0px;
+}
+
+.signUpForm {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  transform: translateY(-50%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px remy(3px) remy(7px) rgba(0,0,0,.25);
+}
+
+.signUpBox {
+  width: 50%;
+  height: 100%;
+  color: #fff;
+
+}
+
+.signUpInput {
+  padding: 2.5rem;
+  background: #fafafa;
+}
+label {
+  font-size: .85rem;
+  text-transform: uppercase;
+  color: #ccc;
+}
+.form-control {
+  background-color: transparent;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+  &:focus {border-color: #111;
+  }
+}
+
+.formButton {
+  padding: .5rem 2.5rem;
+  text-transform: uppercase;
+  color: #fff;
+  border: 0;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 24px;
+  border-radius: 60px;
+  outline: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: all 0.3s;
+  background-color: #6e2639;
+
+  }
+}
+.cancelButton {
+  font-size: .8rem;
+  font-weight: 600;
+  text-decoration: underline;
+  color: #fff;
+  &:focus,
+  &:hover {color: darken(#999, 13%);
+  }
+}
+
+
+.tutorSearchResultsBox {
+  position: absolute;
+  top: 15%;
+  right: 0;
+  left: 0;
+  width: 900px;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #E7E7E7;
+
+}
+
+#tutorSearch tr td{
+	height: 120px;
+}
