@@ -78,6 +78,12 @@ h1, h2, h3, h4, h5, h6{
     transition: color 0.2s ease-out;
 }
 
+.divider-vertical {
+height: 50px;
+border-left: 1px solid #F2F2F2;
+border-right: 1px solid #FFF;
+}
+
 .bannerHeader
 {
     padding-top: 140px;
