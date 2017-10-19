@@ -23,3 +23,13 @@ class TutorForm(FlaskForm):
                                                                               message="Please enter your T-Number")], render_kw={'placeholder':'T-Number'})
 
     program = SelectField(u'Program', choices=[('USS', 'USS Tutors'), ('SS', 'Student Success'), ('math', 'Math Tutors'), ('trio', 'TRiO')])
+
+
+class LoginForm(FlaskForm):
+
+    email = StringField('Email',[validators.Length(min=3, max=15),
+                                                        validators.Regexp('[A-Za-z0-9]+',
+                                                                          message="Please enter your email address")], render_kw={'placeholder':'University Email'})
+    password = TextField('Phone Number',[validators.Length(min=3, max=10),
+                                                            validators.Regexp('[A-Za-z0-9]+',
+                                                                              message="Please enter your password")], render_kw={'placeholder':'Phone Number'})
