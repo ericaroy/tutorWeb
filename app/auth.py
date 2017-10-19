@@ -8,7 +8,7 @@ config = {
   "authDomain": "campustutors-78ccb.firebaseapp.com",
   "databaseURL": "https://campustutors-78ccb.firebaseio.com",
   "storageBucket": "campustutors-78ccb.appspot.com",
-  "serviceAccount": "secret.json"
+  "serviceAccount": "app/secret.json"
 }
 
 

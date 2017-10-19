@@ -7,6 +7,13 @@ body {
     letter-spacing: 0.5px;
     overflow-x: hidden;
 }
+
+body a:link, a:hover, a:visited, a:visited {
+	color: black;
+
+
+}
+
 ol, ul {
 	list-style: none;
 }
@@ -122,7 +129,7 @@ h2.headerTitle
 {
     text-transform: uppercase;
     margin-top: 50px;
-    color: #fff;
+    color: #fff !important;
     border: 0;
     font-size: 14px;
     font-weight: 300;
@@ -135,8 +142,8 @@ h2.headerTitle
     backface-visibility: hidden;
     transition: all 0.3s;
 	background-color: #6e2639;
-
 }
+
 .headerButtons:hover {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
@@ -253,4 +260,5 @@ label {
 
 #tutorSearch tr td{
 	height: 120px;
+	padding-top: 45px;
 }

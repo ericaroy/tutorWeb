@@ -1,5 +1,5 @@
 import os
-from app.auth import connect_database
+from app.userlogic import grab_all_tutors
 from flask_login import LoginManager
 
 from app.forms.base_forms import TutorForm, LoginForm
@@ -19,7 +19,9 @@ def index():
 
 @app.route('/search')
 def find_tutors():
-	return render_template('findtutors.html')
+
+	tutors = grab_all_tutors()
+	return render_template('findtutors.html', tutors=tutors)
 
 
 @app.route('/tutorapp', methods=['GET', 'POST'])
