@@ -1,15 +1,14 @@
 {% extends "base.html" %} <!--Important!! -->
 
-{% block content_title %}Tutor Application Login{% endblock %}
+{% block content_title %}Tutor Application{% endblock %}
 
 
 {% block content %}
 <br />
 <br />
 <div class="signUpForm">
-
   <div class="signUpBox signUpInput">
-    <form action='{{ url_for('login') }}' method="post">
+    <form action='{{ url_for('register') }}' method="post">
     {% for field in form %}
     {{ field.label }}
      <div class='form-group{% if field.errors %} has-error has-feedback{% endif %}'>
@@ -30,21 +29,10 @@
           <li>
             <a class="cancelButton" href='{{ url_for('index') }}'>Cancel</a>
           </li>
-
-        </ul>
-        <ul class="list-inline">
-          <li>
-            <a class="cancelButton" href='{{ url_for('register') }}'>Register</a>
-          </li>
-
         </ul>
       </div>
     </form>
   </div>
 </div>
-
-
-
-
 
 {% endblock %}
