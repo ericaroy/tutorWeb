@@ -109,6 +109,6 @@ test.py
 /tutorenv
 .DS_Store
 
-secret.json
+
 
 # End of https://www.gitignore.io/api/python
