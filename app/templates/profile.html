@@ -1,0 +1,27 @@
+{% extends "base.html" %} <!--Important!! -->
+
+{% block content_title %}{% endblock %}
+
+
+{% block content %}
+<br />
+<br />
+<div class="container">
+	<div class="tutorSearchResultsBox">
+		<h1>My Profile</h1>
+		{% if f %}
+		<h2>Hello {{ f['email'] }}</h2>
+		{% endif %}
+
+
+
+
+
+
+
+	</div>
+
+</div>
+
+
+{% endblock %}

@@ -32,7 +32,14 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="/">Home</a></li>
             <li class="divider-vertical"></li>
-            <li class="active"><a href="/login">Login</a></li>
+            {% if f %}
+            <li class="active"><a href="/logout"> Logout</a></li>
+            <li class="divider-vertical"></li>
+            <li class="active"><a href="/profile"> My Profile</a></li>
+            {% else %}
+            <li class="active"><a href="/login"> Login</a></li>
+            {% endif %}
+
           </ul>
         </div>
       </div>
