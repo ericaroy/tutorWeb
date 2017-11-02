@@ -1,106 +1,126 @@
 import os
+import pyrebase
+import json
+import requests
 from app.userlogic import grab_all_tutors
-from flask_login import LoginManager
+from app.auth import authenticate_user, login_user
 from app.forms.base_forms import TutorForm, LoginForm, RegistrationForm
-from flask import Flask, render_template, request, redirect, url_for, session, json
-from flask_admin import Admin
-from flask_oauthlib.client import OAuth
+from flask import Flask, render_template, request, redirect, url_for, \
+ session, json, flash
+
+
 
 app = Flask(__name__)
-admin = Admin(app, name='Tutor App', template_mode='bootstrap3')
-the_login_manager = LoginManager()
-the_login_manager.init_app(app)
-oauth = OAuth(app)
 app.secret_key = os.environ['SECRET_KEY']
 
-google = oauth.remote_app(
-    'google',
-    consumer_key=os.environ['GOOGLE_CLIENT_ID'],
-    consumer_secret=os.environ['GOOGLE_CLIENT_SECRET'],
-    request_token_params={
-        'scope': 'email'
-    },
-    base_url='https://www.googleapis.com/oauth2/v1/',
-    request_token_url=None,
-    access_token_method='POST',
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-)
+# FIREBASE CONFIG
+config = {
+
+  "apiKey": os.environ['FIREBASE_SECRET_KEY'],
+  "authDomain": "campustutors-78ccb.firebaseapp.com",
+  "databaseURL": "https://campustutors-78ccb.firebaseio.com",
+  "storageBucket": "campustutors-78ccb.appspot.com",
+  "serviceAccount": "app/secret.json"
+}
+
+firebase = pyrebase.initialize_app(config)
+
 
 @app.route('/')
 def index():
-	if 'google_token' in session:
-		me = google.get('userinfo')
-		x = json.dumps(me.data)
-		f = json.loads(x)
 
-		return render_template('index.html', f=f)
-	return render_template('index.html')
+    return render_template('index.html')
 
 
 @app.route('/search')
 def find_tutors():
-
-	tutors = grab_all_tutors()
-	return render_template('findtutors.html', tutors=tutors)
+    tutors = grab_all_tutors()
+    return render_template('findtutors.html', tutors=tutors)
 
 
 @app.route('/profile')
 def get_profile():
-	if 'google_token' in session:
-		me = google.get('userinfo')
-		x = json.dumps(me.data)
-		f = json.loads(x)
-	return render_template('profile.html',f=f)
+    return render_template('profile.html')
 
 
 @app.route('/tutorapp', methods=['GET', 'POST'])
 def tutorapp():
-
-	form = TutorForm(request.form, csrf_enabled=False)
-
-	return render_template('tutorapp.html', form=form)
+    form = TutorForm(request.form, csrf_enabled=False)
+    return render_template('tutorapp.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	if request.method == 'GET':
+    form = LoginForm(request.form)
 
-		return google.authorize(callback=url_for('authorized', _external=True))
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                user_email = form.email.data
+                user_password = form.password.data
+
+                auth = firebase.auth()
+                db = firebase.database()
+                user = auth.sign_in_with_email_and_password(user_email, user_password)
+                account = auth.get_account_info(user['idToken'])
+                # Load User
 
 
-	#Check Firebase to see if there is already an account before creating, if so pass
-	return render_template('index')
+                print(user)
+                print(account)
+
+                session['logged_in'] = True
+                session['user_token'] = user['idToken']
+
+                return redirect('/')
+
+            except requests.exceptions.HTTPError as e:
+                error_json = e.args[1]
+                error = json.loads(error_json)['error']['message']
+                if error == 'EMAIL_NOT_FOUND':
+                    flash('Email Not Found. Please Register an Account.', 'error')
+                else:
+                    flash(error)
+
+        else:
+            pass
+
+    return render_template('login.html', form=form)
 
 
 @app.route('/logout')
 def logout():
-	session.pop('google_token', None)
-	return redirect(url_for('index'))
-
-
-@app.route('/login/authorized')
-def authorized():
-    resp = google.authorized_response()
-    if resp is None:
-        return 'Access denied: reason=%s error=%s' % (
-            request.args['error_reason'],
-            request.args['error_description']
-        )
-    session['google_token'] = (resp['access_token'], '')
-    me = google.get('userinfo')
-
-    return redirect(url_for('index', me=me))
-
-
-@google.tokengetter
-def get_google_oauth_token():
-    return session.get('google_token')
+    session.pop('logged_in', None)
+    session.pop('user_token', None)
+    flash('You were logged out')
+    return redirect(url_for('index'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    form = RegistrationForm(request.form, csrf_enabled=False)
+    if request.method == 'POST':
+        if form.validate_on_submit():
 
-	form = RegistrationForm(request.form, csrf_enabled=False)
+            user_email = form.email.data
+            user_password = form.password.data
+            user_first_name = form.firstName.data
+            user_last_name = form.lastName.data
+            user_program = form.program.data
+            auth = firebase.auth()
+            db = firebase.database()
+            user = auth.create_user_with_email_and_password(user_email, user_password)
+            auth.send_email_verification(user['idToken'])
 
-	return render_template('register.html', form=form)
+            data = {"email": user_email, "firstName": user_first_name, "isTutor": False, "lastName": user_last_name,
+            "profileImage": '',
+            "program": user_program, "subjects": ['None'], "isAdmin": False}
+            db.child("users").child(user['localId']).set(data)
+
+            return redirect(url_for('login'))
+
+
+
+
+            return redirect('/')
+    return render_template('register.html', form=form)

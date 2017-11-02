@@ -1,5 +1,6 @@
 import os
 import pyrebase
+import json
 
 # FIREBASE CONFIG
 config = {
@@ -11,10 +12,29 @@ config = {
   "serviceAccount": "app/secret.json"
 }
 
+firebase = pyrebase.initialize_app(config)
+
 
 # Service Authenticate
 def connect_database():
-    firebase = pyrebase.initialize_app(config)
+
     db = firebase.database()
 
     return db
+
+
+def authenticate_user(email, password):
+    auth = firebase.auth()
+    database = connect_database()
+    user = auth.create_user_with_email_and_password(email, password)
+
+    return user['idToken']
+
+
+def login_user(email, password):
+    auth = firebase.auth()
+    database = connect_database()
+
+    user = auth.sign_in_with_email_and_password(email, password)
+
+    return user

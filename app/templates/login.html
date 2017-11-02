@@ -6,9 +6,31 @@
 {% block content %}
 <br />
 <br />
+
+<div class="container">
+  <div class="row align-items-end">
+    <div class="col">
+        <div class="inner-box">
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                  <div class='alert alert-dismissable alert-{{ category }}'>
+                    <button type='button' class='close' data-dismiss='alert'>&times;</button>
+
+                    {{ message }}
+                  </div>
+                  {% endfor %}
+
+        </div>
+    </div>
+  </div>
+</div>
+
 <div class="signUpForm">
 
+
+
+
   <div class="signUpBox signUpInput">
+
     <form action='{{ url_for('login') }}' method="post">
     {% for field in form %}
     {{ field.label }}
@@ -24,7 +46,7 @@
       <div class="">
         <ul class="list-inline">
           <li>
-            <input class="formButton" type="submit" value="Create" id="createButton"  name="createButton"/>
+            <input class="formButton" type="submit" value="Login" id="createButton"  name="createButton"/>
 
           </li>
           <li>
