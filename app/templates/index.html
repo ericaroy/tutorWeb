@@ -1,79 +1,71 @@
-{% extends "base.html" %}
-
-{% block content_title %}{% endblock %}
-
-
-{% block content %}
+{% extends "base.html" %} {% block content_title %}{% endblock %} {% block content %}
 
 <div>
-<div class="header">
-  <div class="headerImgOverlay">
-    <br />
-    <div class="wrapper">
-    <div class="container">
-      <div class="row">
-        <div class="bannerHeader text-center">
-          <h2 class="headerTitle">Tutor Search Database</h2>
-          <p class="headerSubTitle">Find a tutor on campus.</p>
-          <br />
-          <br />
-            <a href="{{url_for('tutorapp')}}" class="headerButtons">Become a Tutor</a>
-            <a href="{{url_for('find_tutors')}}" class="headerButtons">Find a Tutor</a>
-            <a href="/admin" class="headerButtons">Administrators</a>
+    <div class="header">
+        <div class="headerImgOverlay">
+            <br />
+            <div class="wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="bannerHeader text-center">
+                            <h2 class="headerTitle">Tutor Search Database</h2>
+                            <p class="headerSubTitle">Find a tutor on campus.</p>
+                            <br />
+                            <br />
+                            <a href="{{url_for('tutorapp')}}" class="headerButtons">Become a Tutor</a>
+                            <a href="{{url_for('find_tutors')}}" class="headerButtons">Find a Tutor</a>
+                            <a href="/admin" class="headerButtons">Administrators</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    </div>
-  </div>
-</div>
 </div>
 <header class="landingPage">
-  <div class="header-content">
-          <section class="sectionPad">
+    <div class="header-content">
+        <section class="sectionPad">
             <div class="container">
-              <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                  <div class="wrap-item text-center">
-                    <h3 class="">News</h3>
-                    <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
-                    <br />
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                  <div class="wrap-item text-center">
-                      <a href="http://ualr.edu/writingcenter/home/owl/">
-                    <h3 class="">Online Writing Center</h3>
-                    </a>
-                    <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
-                    <br />
-                    <p>Get help with your college papers by submitting to the Online Writing Center.</p>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="wrap-item text-center">
+                            <h3 class="">News</h3>
+                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                            <br />
+                            <p>Campus News.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="wrap-item text-center">
+                            <a href="http://ualr.edu/writingcenter/home/owl/">
+                                <h3 class="">Online Writing Center</h3>
+                            </a>
+                            <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+                            <br />
+                            <p>Get help with your college papers by submitting to the Online Writing Center.</p>
 
-                  </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="wrap-item text-center">
+                            <h3 class="">Resources</h3>
+                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                            <br />
+                            <p>Curated Resources from Campus.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="wrap-item text-center">
+                            <h3 class="">FAQ</h3>
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                            <br />
+                            <p>Common Questions.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                  <div class="wrap-item text-center">
-                    <h3 class="">Resources</h3>
-                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                    <br />
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                  <div class="wrap-item text-center">
-                    <h3 class="">FAQ</h3>
-                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                    <br />
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  </div>
-                </div>
-              </div>
             </div>
-          </section>
-  </div>
+        </section>
+    </div>
 </header>
 
-<br />
-
-
-{% endblock %}
+<br /> {% endblock %}
