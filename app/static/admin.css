@@ -1,51 +1,202 @@
 @import "bourbon";
 
+
 body {
-	background: #eee !important;
+    background-color: #dedede;
+}
+
+
+.topbar {
+	background: #2A3F54;
+	border-color: #FFFFFF;
+	border-radius: 2px;
+
+}
+
+.topbar .navbar-header a {
+	color: #ffffff;
 }
 
 .wrapper {
-	margin-top: 80px;
-  margin-bottom: 80px;
+    padding-left: 0px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
-.form-signin {
-  max-width: 380px;
-  padding: 15px 35px 45px;
-  margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.1);
+.sidebar {
+    z-index: 1000;
+    position: fixed;
+    top: 50px;
+    left: -50px;
+    width: 50px;
+    height: 100%;
+    overflow-y: auto;
+    background: #2A3F54;
+	color: #ffffff;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
 
-  .form-signin-heading,
-	.checkbox {
-	  margin-bottom: 30px;
+.main {
+	width: 100%;
+    position: relative;
+    padding-bottom:20px;
+}
+
+.wrapper.toggled {
+	padding-left: 50px;
+}
+
+.wrapper.toggled .sidebar {
+	left: 0;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 52px;
+    width: 50px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.sidebar-nav li {
+    line-height: 40px;
+}
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #e8e8e8;
+    padding: 0;
+    text-align:center;
+}
+
+.sidebar-nav li a:hover, .sidebar-nav li.active a {
+    text-decoration: none;
+    color: #fff;
+    background: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav li span, .subbar li span {
+	display : none;
+}
+
+nav.subbar {
+	position: relative;
+	width: 100%;
+	border-radius: 0px;
+	background: #fff;
+	margin: 50px 0 -50px 0;
+	padding: 10px 0 0 0;
+	z-index: 2;
+}
+nav.subbar > ul.nav.nav-tabs {
+	padding: 0 5px;
+}
+
+nav.subbar > ul.nav.nav-tabs > li.active > a {
+    background: #dedede;
+    border-top: 1px solid #a6a6a6;
+    border-left: 1px solid #a6a6a6;
+    border-right: 1px solid #a6a6a6;
+    border-radius: 0px;
+}
+
+.content {
+    margin-top: 70px;
+    padding: 0 30px;
+}
+
+@media(min-width:768px){
+	.subbar li span {
+		display: inline;
+	}
+}
+
+@media(min-width:992px) {
+    .wrapper {
+    	padding-left: 50px;
+    }
+
+    .sidebar {
+    	left: 0;
+    	width: 50px;
 	}
 
-	.checkbox {
-	  font-weight: normal;
+	.wrapper.toggled {
+		padding-left: 200px;
 	}
 
-	.form-control {
-	  position: relative;
-	  font-size: 16px;
-	  height: auto;
-	  padding: 10px;
-		@include box-sizing(border-box);
-
-		&:focus {
-		  z-index: 2;
-		}
+	.wrapper.toggled .sidebar, .wrapper.toggled .sidebar-nav {
+		width: 200px;
 	}
 
-	input[type="text"] {
-	  margin-bottom: -1px;
-	  border-bottom-left-radius: 0;
-	  border-bottom-right-radius: 0;
+	.wrapper.toggled .sidebar-nav li a {
+		text-align: left;
+		padding: 0 0 0 10px;
 	}
 
-	input[type="password"] {
-	  margin-bottom: 20px;
-	  border-top-left-radius: 0;
-	  border-top-right-radius: 0;
+	.wrapper.toggled .sidebar-nav li span {
+		display: inline;
 	}
+
+}
+
+.navbar-btn {
+    background: none;
+    border: none;
+    height: 35px;
+    min-width: 35px;
+    color: #fff;
+}
+.navbar-text {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+@media (min-width: 768px) {
+  .navbar-text {
+    float: left;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+.tile_count {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.tile_count .tile_stats_count .count {
+    font-size: 40px;
+}
+.tile_count .tile_stats_count span {
+    font-size: 13px;
+}
+.tile_count .tile_stats_count .count {
+    font-size: 30px;
+    line-height: 47px;
+    font-weight: 600;
+}
+.tile_count .tile_stats_count:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 65px;
+    border-left: 2px solid #ADB2B5;
+    margin-top: 10px;
+}
+.green {
+    color: #1ABB9C;
+}
+.red {
+    color: #E74C3C;
 }

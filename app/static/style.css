@@ -9,6 +9,21 @@ body {
 	padding-top: 70px;
 }
 
+.wrapper {
+    padding-left: 0px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.main {
+	width: 100%;
+    position: relative;
+    padding-bottom:20px;
+}
+
+
 body a:link, a:hover, a:visited, a:visited {
 	color: black;
 
@@ -29,6 +44,7 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	
 }
 h1, h2, h3, h4, h5, h6{
     font-family: 'Roboto', sans-serif;
@@ -243,8 +259,10 @@ label {
 
 
 .tutorSearchResultsBox {
-  position: absolute;
+  position: left;
   top: 15%;
+  padding-bottom: 40px;
+  padding-top: 20px;
   right: 0;
   left: 0;
   width: 900px;
@@ -255,7 +273,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #E7E7E7;
+
 
 }
 
@@ -270,4 +288,51 @@ img-erica {
 
 .error {
     color: red
+}
+.wrapper {
+    padding-left: 0px;
+	padding-top: 20px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.main {
+	width: 100%;
+    position: relative;
+    padding-bottom:20px;
+}
+.img-circle {
+	padding-right: 30px;
+}
+
+.tile_count {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.tile_count .tile_stats_count .count {
+    font-size: 40px;
+}
+.tile_count .tile_stats_count span {
+    font-size: 13px;
+}
+.tile_count .tile_stats_count .count {
+    font-size: 30px;
+    line-height: 47px;
+    font-weight: 600;
+}
+.tile_count .tile_stats_count:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 65px;
+    border-left: 2px solid #ADB2B5;
+    margin-top: 10px;
+}
+.green {
+    color: #1ABB9C;
+}
+.red {
+    color: #E74C3C;
 }

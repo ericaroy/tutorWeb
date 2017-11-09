@@ -1,17 +1,348 @@
-{% extends 'admin/baseadmin.html'%}
+{% extends 'admin/baseadmin.html'%} {% block content %}
 
-{% block content %}
 
-<div class="wrapper">
-  <form class="form-signin">
-	<h2 class="form-signin-heading">Please login</h2>
-	<input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
-	<input type="password" class="form-control" name="password" placeholder="Password" required=""/>
-	<label class="checkbox">
-	  <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
-	</label>
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-  </form>
-</div>
+<nav class="navbar navbar-fixed-top topbar">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+
+            <a href="#" class="navbar-brand">
+
+					<span class="hidden-xs">Campus Tutors</span>
+				</a>
+
+            <p class="navbar-text">
+                <a href="{{url_for('index')}}" class="sidebar-toggle">
+                        <i class="fa fa-home"></i>
+                    </a>
+            </p>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-collapse-main">
+
+            <ul class="nav navbar-nav navbar-right">
+
+
+                <li class="dropdown">
+                    <button class="navbar-btn" data-toggle="dropdown">
+                            <i class="fa fa-plus"></i>
+
+                        </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Add Tutor</a></li>
+                        <li><a href="#">Add Session</a></li>
+                        <li class="nav-divider"></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <button class="navbar-btn">
+                            <i class="fa fa-bell"></i>
+
+                        </button>
+                </li>
+
+
+                <li class="dropdown">
+                    <button class="navbar-btn" data-toggle="dropdown">
+							<img src="http://lorempixel.com/30/30/people" class="img-circle">
+						</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Account</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<article class="wrapper">
+
+    <aside class="sidebar">
+        <ul class="sidebar-nav">
+            <li class="active"><a href="#dashboard" data-toggle="tab"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li><a href="#configuration" data-toggle="tab"><i class="fa fa-cogs"></i> <span>Configuration</span></a></li>
+        </ul>
+    </aside>
+
+    <section class="main">
+
+        <section class="tab-content">
+
+            <section class="tab-pane active fade in content" id="dashboard">
+
+                <nav class="subbar">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#access" data-toggle="tab"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="#roles" data-toggle="tab"><i class="fa fa-user"></i> <span>All Tutors</span></a></li>
+                        <li><a href="#messages" data-toggle="tab"><i class="fa fa-envelope"></i> <span>Messages</span></a></li>
+                    </ul>
+                </nav>
+
+                <section class="tab-content content">
+
+                    <section class="tab-pane active fade in" id="access">
+
+                        <div class="row">
+                            <div class="row tile_count">
+                                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                    <div class="text-center">
+
+
+                                        <span class="count_top"><i class="fa fa-user"></i> Total Tutors</span>
+                                        <div class="count">10</div>
+                                        <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                    <div class="text-center">
+
+                                        <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
+                                        <div class="count">123.50</div>
+                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                    <div class="text-center">
+                                        <span class="count_top"><i class="fa fa-user"></i> Total Sessions</span>
+                                        <div class="count green">20</div>
+                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>24% </i> From last Week</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                    <div class="text-center">
+                                        <span class="count_top"><i class="fa fa-user"></i> Students Tutored</span>
+                                        <div class="count">32</div>
+                                        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                    <div class="text-center">
+                                        <span class="count_top"><i class="fa fa-user"></i> TBD</span>
+                                        <div class="count">0</div>
+                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> From last Week</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                    <div class="text-center">
+                                        <span class="count_top"><i class="fa fa-user"></i> TBD</span>
+                                        <div class="count">0</div>
+                                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> From last Week</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Tutor Queue - New tutor applications will appear here for your approval.
+                                    </div>
+                                    <div class="panel-body">
+
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="span5">
+                                                    <table class="table table-striped table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Application Date</th>
+                                                                <th>Main Subject</th>
+                                                                <th>Application</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Donna R. Folse</td>
+                                                                <td>2017/05/06</td>
+                                                                <td>General</td>
+                                                                <td><span class="label label-primary">View Application</span></td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-check"></span> Approve</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Decline</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Emily F. Burns</td>
+                                                                <td>2017/12/01</td>
+                                                                <td>Science</td>
+                                                                <td><span class="label label-primary">View Application</span></td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-check"></span> Approve</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Decline</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Andrew A. Stout</td>
+                                                                <td>2017/08/21</td>
+                                                                <td>General</td>
+                                                                <td><span class="label label-primary">View Application</span></td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-check"></span> Approve</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Decline</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Mary M. Bryan</td>
+                                                                <td>2017/04/11</td>
+                                                                <td>Math</td>
+                                                                <td><span class="label label-primary">View Application</span></td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-check"></span> Approve</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Decline</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Mary A. Lewis</td>
+                                                                <td>2017/02/01</td>
+                                                                <td>Writing</td>
+                                                                <td><span class="label label-primary">View Application</span></td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-check"></span> Approve</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Decline</a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Sessions - Upcoming walk-in tutoring and training sessions appear here.
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="span5">
+                                                    <table class="table table-striped table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tutor</th>
+                                                                <th>Date/Time</th>
+                                                                <th>Subject</th>
+                                                                <th>Location</th>
+                                                                <th>Type</th>
+                                                                <th>Status</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Donna R. Folse</td>
+                                                                <td>12/5 8am - 2pm</td>
+                                                                <td>General</td>
+                                                                <td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
+                                                                <td>Walk-In</td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Emily F. Burns</td>
+                                                                <td>12/5 8am - 2pm</td>
+                                                                <td>Science</td>
+                                                                <td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
+                                                                <td>Walk-In</td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Andrew A. Stout</td>
+                                                                <td>12/5 8am - 2pm</td>
+                                                                <td>General</td>
+                                                                <td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
+                                                                <td>Appointment</td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Mary M. Bryan</td>
+                                                                <td>12/5 8am - 2pm</td>
+                                                                <td>Math</td>
+                                                                <td><span class=""><a href="https://www.google.com/maps/place/Dickinson+Hall,+Little+Rock,+AR+72204/data=!4m2!3m1!1s0x87d2a4f63ce5c489:0x588fbfa56eb50416?sa=X&ved=0ahUKEwi7w_2dmrLXAhVJilQKHd8YAUQQ8gEIJzAA"><i class="fa fa-map"></i></a> DKSN 324</span></td>
+                                                                <td>Walk-In</td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Mary A. Lewis</td>
+                                                                <td>12/5 8am - 2pm</td>
+                                                                <td>Writing</td>
+                                                                <td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
+                                                                <td>Appointment</td>
+                                                                <td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/><br/><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+
+                    </section>
+
+                    <section class="tab-pane fade" id="roles">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8 col-md-9">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Something
+                                    </div>
+                                    <div class="panel-body">
+                                        A list of all tutors in your program will appear here.
+                                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hidden-xs col-sm-4 col-md-3">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Something
+                                    </div>
+                                    <div class="panel-body">
+                                        <br/><br/><br/>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Something
+                                    </div>
+                                    <div class="panel-body">
+                                        <br/><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </section>
+
+            </section>
+
+            <section class="tab-pane fade" id="configuration">
+
+
+            </section>
+
+
+
+        </section>
+
+
+
+
+    </section>
+
+</article>
 
 {% endblock %}

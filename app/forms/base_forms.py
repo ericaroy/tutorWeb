@@ -24,7 +24,7 @@ class TutorForm(FlaskForm):
                                                             validators.Regexp('[0-9]+',
                                                                               message="Please enter your T-Number")], render_kw={'placeholder':'T-Number'})
     gpa = TextField('GPA',[validators.Length(min=1, max=3),
-                                                            validators.Regexp('[0-9]+',
+                                                            validators.Regexp('[0-3]+',
                                                                               message="Please enter your Overall GPA")], render_kw={'placeholder':'GPA'})
 
     program = SelectField(u'Program', choices=[('USS', 'USS Tutors'), ('SS', 'Student Success'), ('math', 'Math Tutors'), ('trio', 'TRiO')])

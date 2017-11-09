@@ -8,10 +8,12 @@ click==6.7
 docutils==0.14
 firebase-admin==2.4.0
 Flask==0.12.2
+Flask-Admin==1.5.0
 Flask-BabelEx==0.9.3
 Flask-Mail==0.9.1
 Flask-Principal==0.4.0
 Flask-WTF==0.14.2
+gcloud==0.18.3
 google-auth-oauthlib==0.1.1
 google-cloud-core==0.27.1
 google-cloud-storage==1.4.0

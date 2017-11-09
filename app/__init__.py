@@ -2,6 +2,7 @@ import os
 import pyrebase
 import json
 import requests
+from flask_admin import Admin
 from app.userlogic import grab_all_tutors
 from app.auth import authenticate_user, login_user
 from app.forms.base_forms import TutorForm, LoginForm, RegistrationForm
@@ -12,6 +13,7 @@ from flask import Flask, render_template, request, redirect, url_for, \
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
+admin = Admin(app, name='CampusTutors', template_mode='bootstrap3')
 
 # FIREBASE CONFIG
 config = {
@@ -40,12 +42,15 @@ def find_tutors():
 
 @app.route('/profile')
 def get_profile():
+
     return render_template('profile.html')
 
 
 @app.route('/tutorapp', methods=['GET', 'POST'])
 def tutorapp():
     form = TutorForm(request.form, csrf_enabled=False)
+
+
     return render_template('tutorapp.html', form=form)
 
 
@@ -63,14 +68,14 @@ def login():
                 db = firebase.database()
                 user = auth.sign_in_with_email_and_password(user_email, user_password)
                 account = auth.get_account_info(user['idToken'])
-                # Load User
-
-
-                print(user)
-                print(account)
-
+                # Load User from DB
+                b = db.child("users").child(user['localId']).get()
+                name = b.val()['firstName']
+                
                 session['logged_in'] = True
                 session['user_token'] = user['idToken']
+                session['user_id'] = user['localId']
+                session['user_first_name'] = name
 
                 return redirect('/')
 
@@ -92,6 +97,8 @@ def login():
 def logout():
     session.pop('logged_in', None)
     session.pop('user_token', None)
+    session.pop('user_first_name', None)
+    session.pop('user_id', None)
     flash('You were logged out')
     return redirect(url_for('index'))
 
@@ -118,9 +125,6 @@ def register():
             db.child("users").child(user['localId']).set(data)
 
             return redirect(url_for('login'))
-
-
-
 
             return redirect('/')
     return render_template('register.html', form=form)
