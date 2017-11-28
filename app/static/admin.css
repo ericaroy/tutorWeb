@@ -41,7 +41,8 @@ body {
     transition: all 0.5s ease;
 }
 
-.main {
+.main
+{
 	width: 100%;
     position: relative;
     padding-bottom:20px;

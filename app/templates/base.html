@@ -39,6 +39,10 @@
             {% else %}
             <li class="active"><a href="/login"> Login</a></li>
             {% endif %}
+            <li class="divider-vertical"></li>
+            {% if session.role == 'admin' and session.logged_in %}
+            <li class="active"><a href=""> Test</a></li>
+            {% endif %}
 
           </ul>
         </div>

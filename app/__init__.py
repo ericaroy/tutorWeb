@@ -2,19 +2,20 @@ import os
 import pyrebase
 import json
 import requests
-from flask_admin import Admin
+from functools import wraps
+from flask_principal import Principal, Permission, RoleNeed, Identity, identity_changed
+from flask_admin import Admin, AdminIndexView, expose
 from app.userlogic import grab_all_tutors
 from app.auth import authenticate_user, login_user
 from app.forms.base_forms import TutorForm, LoginForm, RegistrationForm
 from flask import Flask, render_template, request, redirect, url_for, \
- session, json, flash
-
+ session, json, flash, Response
 
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
 admin = Admin(app, name='CampusTutors', template_mode='bootstrap3')
-
+admin_permission = Permission(RoleNeed('admin'))
 # FIREBASE CONFIG
 config = {
 
@@ -26,6 +27,19 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
+principals = Principal(app)
+
+
+
+def login_required(test):
+    @wraps(test)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return test(*args, **kwargs)
+        else:
+            flash('You need to log in first.')
+            return redirect(url_for('login'))
+    return wrap
 
 
 @app.route('/')
@@ -47,9 +61,9 @@ def get_profile():
 
 
 @app.route('/tutorapp', methods=['GET', 'POST'])
+@login_required
 def tutorapp():
     form = TutorForm(request.form, csrf_enabled=False)
-
 
     return render_template('tutorapp.html', form=form)
 
@@ -71,11 +85,14 @@ def login():
                 # Load User from DB
                 b = db.child("users").child(user['localId']).get()
                 name = b.val()['firstName']
-                
+                role = b.val()['role']
+
                 session['logged_in'] = True
                 session['user_token'] = user['idToken']
                 session['user_id'] = user['localId']
                 session['user_first_name'] = name
+                session['role'] = role
+
 
                 return redirect('/')
 
@@ -119,9 +136,9 @@ def register():
             user = auth.create_user_with_email_and_password(user_email, user_password)
             auth.send_email_verification(user['idToken'])
 
-            data = {"email": user_email, "firstName": user_first_name, "isTutor": False, "lastName": user_last_name,
+            data = {"email": user_email, "firstName": user_first_name, "role": 'user', "lastName": user_last_name,
             "profileImage": '',
-            "program": user_program, "subjects": ['None'], "isAdmin": False}
+            "program": user_program, "subjects": ['None'], "isTutorVerified": False}
             db.child("users").child(user['localId']).set(data)
 
             return redirect(url_for('login'))
