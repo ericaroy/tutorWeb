@@ -206,6 +206,3 @@ def register():
             #return redirect('/')
     return render_template('register.html', form=form)
 
-@app.route('/approvals')
-def approve():
-    # Push an update to Firebase URL if user is authenticated for their department
