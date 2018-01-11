@@ -6,41 +6,32 @@
 {% block content %}
 <br />
 <br />
-
-	<div class="tutorSearchResultsBox">
-		<table class="table" id="tutorSearch">
-  <thead class="thead-inverse">
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Program</th>
-	  <th>Subjects</th>
-	  <th>View Profile</th>
-	  <th>Request</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-
-	  {% for user in tutors %}
-
-	  <th scope="row"><img src='{{user['profileImage']}}' alt="" class="img-rounded img-responsive img-erica" width=100 height=100 /></th>
-	  <td>{{user['firstName'] + " " + user['lastName']}}</td>
-	  <td>{{user['program']}}</td>
-	  <td>{{user['subjects'][0]}}</td>
-	  <td><a href="#">View Profile</a></td>
-	  <td><a href="#">Request Tutor</a></td>
-	  </tr>
-	  {% endfor %}
+<div class="container">
+{% for user in tutors %}
+  <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="card hovercard">
+                <div class="cardheader"></div>
+                <div class="avatar">
+                    <img src="{{user['profileImage']}}" alt="" />
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <a target="_blank" href="#">{{ user['firstName'] + " " + user['lastName'] }}</a>
+                    </div>
+                    <div class="desc">{{user['program']}}</div>
+                    <div class="desc">{{user['subjects'][0]}}</div>
+                    <div class="desc"><a href="#">View Profile</a></div>
+                    <div class="desc"><button type="button" class="cardbutton">Contact</button></div>
+                </div>
+            </div>
+        </div>
 
 
-
-  </tbody>
-</table>
-
-	</div>
-
+{% endfor %}
 </div>
+
+
 
 
 {% endblock %}
