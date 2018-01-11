@@ -2,10 +2,12 @@ import os
 import pyrebase
 import json
 import requests
+import time
+from datetime import date
 from functools import wraps
 from flask_principal import Principal, Permission, RoleNeed, Identity, identity_changed
 from flask_admin import Admin, AdminIndexView, expose
-from app.userlogic import grab_all_tutors
+from app.userlogic import grab_all_tutors, grab_tutor_applications
 from app.auth import authenticate_user, login_user
 from app.forms.base_forms import TutorForm, LoginForm, RegistrationForm
 from flask import Flask, render_template, request, redirect, url_for, \
@@ -30,7 +32,6 @@ firebase = pyrebase.initialize_app(config)
 principals = Principal(app)
 
 
-
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
@@ -50,22 +51,74 @@ def index():
 
 @app.route('/search')
 def find_tutors():
+
     tutors = grab_all_tutors()
+
     return render_template('findtutors.html', tutors=tutors)
 
 
 @app.route('/profile')
+@login_required
 def get_profile():
+    # Grab User by username/Display Profile only if Auth = Current User Auth
 
-    return render_template('profile.html')
+    applications = grab_tutor_applications()
+
+
+    return render_template('profile.html', applications=applications)
+
+# Refactor login, register, tutorapp instead of multiple calls to DB
+
+
+def send_simple_message(body, subject):
+
+    return requests.post(
+        'https://api.mailgun.net/v3/{}/messages'.format(os.environ['MAILGUN_DOMAIN']),
+        auth=("api", os.environ['MAILGUN_PRIVATE_KEY']),
+        data={"from": "enroy@ualr.edu",
+              "to": 'enroy@ualr.edu',
+              "subject": subject,
+              "text": body,
+              "html": render_template('TutorApplication.html', body=body)
+              })
 
 
 @app.route('/tutorapp', methods=['GET', 'POST'])
 @login_required
 def tutorapp():
-    form = TutorForm(request.form, csrf_enabled=False)
 
-    return render_template('tutorapp.html', form=form)
+    if session['role'] is 'admin' or session['role'] is 'tutor':
+        flash('You are already a tutor or admin')
+        return redirect(url_for('get_profile'))
+    else:
+        form = TutorForm(request.form, csrf_enabled=False)
+        if request.method == 'POST':
+            if form.validate_on_submit():
+
+                user_email = form.email.data
+                user_first_name = form.firstName.data
+                user_last_name = form.lastName.data
+                user_name = user_first_name + " " + user_last_name
+                user_program = form.program.data
+                user_phone = form.phone.data
+                user_t_number = form.tnumber.data
+                user_gpa = str(form.gpa.data)
+                user_main_subject = form.subjects.data
+                today = date.today()
+                today = str(today)
+
+                db = firebase.database()
+
+                data = {"name": user_name, "application_date": today, "gpa": user_gpa, "t_number": user_t_number, "phone": user_phone, "email": user_email, "approved": False, "subject": user_main_subject, "program": user_program}
+                db.child("tutorapplications").child(session['user_id']).set(data)
+                body = data
+                subject = 'New Tutor Application'
+                send_simple_message(body, subject)
+                flash('Application Sent')
+
+                return redirect(url_for('get_profile'))
+
+        return render_template('tutorapp.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -82,19 +135,26 @@ def login():
                 db = firebase.database()
                 user = auth.sign_in_with_email_and_password(user_email, user_password)
                 account = auth.get_account_info(user['idToken'])
-                # Load User from DB
-                b = db.child("users").child(user['localId']).get()
-                name = b.val()['firstName']
-                role = b.val()['role']
 
-                session['logged_in'] = True
-                session['user_token'] = user['idToken']
-                session['user_id'] = user['localId']
-                session['user_first_name'] = name
-                session['role'] = role
+                # Verify Firebase DB User Account
+                if account['users'][0]['emailVerified'] is False:
+                    flash('Your email is not verified, click here to resend', 'error')
+                    auth.send_email_verification(user['idToken'])
+
+                else:
+                    # Load User from DB & into Login-Manager
+                    b = db.child("users").child(user['localId']).get()
+
+                    session['logged_in'] = True
+                    session['user_token'] = user['idToken']
+                    session['user_id'] = user['localId']
+                    session['user_first_name'] = b.val()['firstName']
+                    session['role'] = b.val()['role']
+                    session['email'] = b.val()['email']
+                    session['program'] = b.val()['program']
 
 
-                return redirect('/')
+                    return redirect('/')
 
             except requests.exceptions.HTTPError as e:
                 error_json = e.args[1]
@@ -131,17 +191,21 @@ def register():
             user_first_name = form.firstName.data
             user_last_name = form.lastName.data
             user_program = form.program.data
+            user_name = form.username.data
             auth = firebase.auth()
             db = firebase.database()
             user = auth.create_user_with_email_and_password(user_email, user_password)
             auth.send_email_verification(user['idToken'])
-
             data = {"email": user_email, "firstName": user_first_name, "role": 'user', "lastName": user_last_name,
-            "profileImage": '',
+            "userName": user_name, "profileImage": '',
             "program": user_program, "subjects": ['None'], "isTutorVerified": False}
             db.child("users").child(user['localId']).set(data)
 
             return redirect(url_for('login'))
 
-            return redirect('/')
+            #return redirect('/')
     return render_template('register.html', form=form)
+
+@app.route('/approvals')
+def approve():
+    # Push an update to Firebase URL if user is authenticated for their department

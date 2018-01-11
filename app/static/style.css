@@ -55,6 +55,7 @@ h1, h2, h3, h4, h5, h6{
     border:0px;
     padding: 20px 0;
     transition: all 0.3s;
+	border-color: #6E2639 !important;
 }
 
 .top-nav-collapse {
@@ -275,7 +276,7 @@ img-erica {
 .error {
     color: red
 }
-.wrapper {
+.wrapperProfile {
     padding-left: 0px;
 	padding-top: 20px;
     -webkit-transition: all 0.5s ease;
@@ -284,13 +285,14 @@ img-erica {
     transition: all 0.5s ease;
 }
 
-.main {
+.mainProfile {
 	width: 100%;
+	padding-left: 40px;
     position: relative;
     padding-bottom:20px;
 }
 .img-circle {
-	padding-right: 30px;
+	border-radius: 50px !important;
 }
 
 .tile_count {
@@ -321,4 +323,111 @@ img-erica {
 }
 .red {
     color: #E74C3C;
+}
+
+.navbar-btn {
+    background: none;
+    border: none;
+    height: 35px;
+    min-width: 35px;
+    color: #fff;
+}
+
+.fa-bell {
+  color: black;
+
+}
+.fa-plus {
+	color: black;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.sidebar {
+    z-index: 1000;
+    position: fixed;
+    top: 50px;
+    width: 50px;
+    height: 100%;
+    overflow-y: auto;
+    background: #6E2639;
+	color: #ffffff;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 52px;
+    width: 50px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.sidebar-nav li {
+    line-height: 40px;
+}
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #e8e8e8;
+    padding: 0;
+    text-align:center;
+}
+
+.sidebar-nav li a:hover, .sidebar-nav li.active a {
+    text-decoration: none;
+    color: #fff;
+    background: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav li span, .subbar li span {
+	display : none;
+}
+
+nav.subbar {
+	position: relative;
+	width: 100%;
+	border-radius: 0px;
+	background: #fff;
+	margin: -50px 0 -50px 0;
+	padding: 10px 0 0 0;
+	z-index: 2;
+}
+nav.subbar > ul.nav.nav-tabs {
+	padding: 0 5px;
+}
+
+nav.subbar > ul.nav.nav-tabs > li.active > a {
+    background: #dedede;
+    border-top: 1px solid #a6a6a6;
+    border-left: 1px solid #a6a6a6;
+    border-right: 1px solid #a6a6a6;
+    border-radius: 0px;
+}
+
+.content {
+    margin-top: 70px;
+    padding: 0 30px;
+}
+
+.modal-content {
+    width: 800px;
+    height: 800px;
+}
+
+.modal-body {
+    width: 800px;
+    height: 800px;
 }

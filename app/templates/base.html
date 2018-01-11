@@ -11,6 +11,7 @@
 
     <script src='https://code.jquery.com/jquery-1.10.2.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Pacifico|Baloo+Tammudu|Lato" rel="stylesheet">
 
@@ -18,8 +19,8 @@
 
 <body>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top topbar">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             <span class="icon-bar"></span>
@@ -28,27 +29,100 @@
           </button>
           <a class="navbar-brand" href="/">Tutor Search<span class="logo-dec"></span></a>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/">Home</a></li>
-            <li class="divider-vertical"></li>
-            {% if session.logged_in %}
-            <li class="active"><a href="/logout"> Logout</a></li>
-            <li class="divider-vertical"></li>
-            <li class="active"><a href="/profile"> My Profile</a></li>
-            {% else %}
-            <li class="active"><a href="/login"> Login</a></li>
-            {% endif %}
-            <li class="divider-vertical"></li>
-            {% if session.role == 'admin' and session.logged_in %}
-            <li class="active"><a href=""> Test</a></li>
-            {% endif %}
 
-          </ul>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    {% if session.logged_in %}
+                    <button class="navbar-btn" data-toggle="dropdown">
+                            <img src="http://lorempixel.com/30/30/people" class="img-circle">
+                        </button>
+                    <ul class="dropdown-menu">
+
+                        <li><a href="/profile">Dashboard</a></li>
+                        <li><a href="#">Account</a></li>
+                        <li class="nav-divider"></li>
+                        {% if session.role == 'user' and session.logged_in %}
+                        <li><a href="#">Add Course</a></li>
+                        <li><a href="#">Tutor Match Assessment</a></li>
+                        <li><a href="#">Schedule Tutor Session</a></li>
+                        <li><a href="#">Become a Tutor</a></li>
+                        <li class="nav-divider"></li>
+                        {% elif session.role == 'tutor' and session.logged_in %}
+                        <li><a href="#">Schedule Session</a></li>
+                        <li class="nav-divider"></li>
+
+                        {% elif session.role == 'admin' and session.logged_in %}
+                        <li><a href="#" data-toggle="modal" data-target="#addTutor">Add Tutor</a></li>
+                        <li><a href="#">Add Session</a></li>
+
+                        <li class="nav-divider"></li>
+                        {% endif %}
+                        <li><a href="/logout">Logout</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <button class="navbar-btn">
+                            <i class="fa fa-bell"></i>
+
+                        </button>
+                </li>
+                {% else %}
+                <li class="active"><a href="/login"> Login</a></li>
+                {% endif %}
+
+            </ul>
+
         </div>
       </div>
     </nav>
 {% block content %}{% endblock %}
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="addTutor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Tutor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form action='{{ url_for('tutorapp') }}' method="post">
+        {% for field in form %}
+        {{ field.label }}
+        <div class='form-group{% if field.errors %} has-error has-feedback{% endif %}'>
+         {{ field(class='form-control') }}
+         {% if field.errors %}
+            <span class='glyphicon glyphicon-warning-sign form-control-feedback'></span>
+         {% endif %}
+         {% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+
+     </div>
+    {% endfor %}
+      <div class="">
+        <ul class="list-inline">
+          <li>
+            <input class="formButton" type="submit" value="Create" id="createButton"  name="createButton"/>
+
+          </li>
+          <li>
+            <a class="cancelButton" href='{{ url_for('index') }}'>Cancel</a>
+          </li>
+        </ul>
+      </div>
+    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

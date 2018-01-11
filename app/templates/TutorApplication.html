@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Tutor Application</title>
+<link rel='stylesheet' href='{{url_for('static', filename='email.css')}}'>
+</head>
+
+
+<body >
+	<p>Dear {{body['program']}},</p>
+	<p>{{ body['name'] }}</a> has requested to become a tutor. <a href="{{ url_for('get_profile', _external=True) }}">Click here to view the application. </a></p>
+	<table>
+	    <tr valign="top">
+
+
+	    </tr>
+	</table>
+	<p>Regards,</p>
+	<p>The <code>Campus Tutor</code> </p>
+
+
+</body>
+</html>
