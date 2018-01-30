@@ -6,17 +6,7 @@ from wtforms import StringField, SelectField, TextField, validators, \
 
 class TutorForm(FlaskForm):
 
-    firstName = StringField('First Name',[validators.Length(min=4, max=40),
-                                                  validators.Regexp('[A-Za-z0-9]+',
-                                                                    message="Please enter your first name")], render_kw={'placeholder': 'First Name'})
 
-    lastName = StringField('Last Name',[validators.Length(min=3, max=40),
-                                                        validators.Regexp('[A-Za-z0-9]+',
-                                                                          message="Please enter your last name")], render_kw={'placeholder':'Last Name'})
-
-    email = StringField('Email',[validators.Length(min=3, max=50),
-                                                        validators.Regexp('[A-Za-z0-9]+',
-                                                                          message="Please enter your email address")], render_kw={'placeholder':'University Email'})
     phone = TextField('Phone Number',[validators.Length(min=3, max=10),
                                                             validators.Regexp('[0-9]+',
                                                                               message="Please enter your phone number")], render_kw={'placeholder':'Phone Number'})
@@ -24,8 +14,6 @@ class TutorForm(FlaskForm):
                                                             validators.Regexp('[0-9]+',
                                                                               message="Please enter your T-Number")], render_kw={'placeholder':'T-Number'})
     gpa = DecimalField('GPA', [validators.NumberRange(min=1, max=4)])
-
-    program = SelectField(u'Program', choices=[('USS', 'USS Tutors'), ('GEN', 'General'), ('SS', 'Student Success'), ('math', 'Math Tutors'), ('trio', 'TRiO')])
 
     subjects = SelectField(u'Main Subject', choices=[('MATH', 'Math'), ('ACCT', 'Accounting'), ('AC', 'Applied Communication'), ('SCIENCE', 'Science'), ('GENERAL', 'General')])
 
@@ -43,14 +31,27 @@ class AddTutorForm(FlaskForm):
     email = StringField('Email',[validators.Length(min=3, max=50),
                                                         validators.Regexp('[A-Za-z0-9]+',
                                                                           message="Please enter your email address")], render_kw={'placeholder':'University Email'})
+    username = StringField('Username', [validators.Length(min=3, max=40),
+                                        validators.Regexp('[A-Za-z0-9]+',
+                                                          message="Please enter a username")],
+                           render_kw={'placeholder': 'UserName'})
+    password = PasswordField('Password', [validators.Length(min=6, max=15),
+                                          validators.EqualTo('confirm', message='Passwords must match'),
+                                          validators.Regexp('[A-Za-z0-9]+',
+                                                            message="Please enter your password")],
+                             render_kw={'placeholder': 'Password'})
+    confirm = PasswordField('Password', [validators.Length(min=6, max=15),
+                                         validators.EqualTo('confirm', message='Passwords must match'),
+                                         validators.Regexp('[A-Za-z0-9]+',
+                                                           message="Please confirm your password")],
+                            render_kw={'placeholder': ' Confirm Password'})
     phone = TextField('Phone Number',[validators.Length(min=3, max=10),
                                                             validators.Regexp('[0-9]+',
                                                                               message="Please enter your phone number")], render_kw={'placeholder':'Phone Number'})
-    gpa = DecimalField('GPA', [validators.NumberRange(min=1, max=4)])
 
     program = SelectField(u'Program', choices=[('USS', 'USS Tutors'), ('GEN', 'General'), ('SS', 'Student Success'), ('math', 'Math Tutors'), ('trio', 'TRiO')])
 
-    subjects = SelectField(u'Main Subject', choices=[('MATH', 'Math'), ('ACCT', 'Accounting'), ('AC', 'Applied Communication'), ('SCIENCE', 'Science'), ('GENERAL', 'General')])
+    subjects = SelectField(u'Main Subject', choices=[('MATH', 'Math'), ('ACCOUNTING', 'Accounting'), ('APPLIED COMMUNICATION', 'Applied Communication'), ('SCIENCE', 'Science'), ('GENERAL', 'General')])
 
 
 class AddSessionForm(FlaskForm):

@@ -53,7 +53,7 @@
                         <li class="nav-divider"></li>
 
                         {% elif session.role == 'admin' and session.logged_in %}
-                        <li><a href="#" data-toggle="modal" data-target="#addTutor">Add Tutor</a></li>
+                        <li><a href='{{ url_for('addtutorapp') }}'>Add Tutor</a></li>
                         <li><a href="#">Add Session</a></li>
 
                         <li class="nav-divider"></li>
@@ -91,7 +91,7 @@
         </button>
       </div>
       <div class="modal-body">
-         <form action='{{ url_for('tutorapp') }}' method="post">
+         <form action='{{ url_for('addtutorapp') }}' method="post">
         {% for field in form %}
         {{ field.label }}
         <div class='form-group{% if field.errors %} has-error has-feedback{% endif %}'>

@@ -237,56 +237,32 @@
 															<thead>
 																<tr>
 																	<th>Tutor</th>
-																	<th>Date/Time</th>
+																	<th>Availability</th>
 																	<th>Subjects</th>
-																	<th>Location</th>
-																	<th>Type</th>
+																	<th>Email</th>
 																	<th>Status</th>
 
 																</tr>
 															</thead>
 															<tbody>
 
+                                                                {% for department_tutors in department_tutors %}
+																	{% if department_tutors['program'] == session.program %}
 																<tr>
-																	<td>Donna R. Folse</td>
-																	<td>12/5 8am - 2pm</td>
-																	<td>General</td>
-																	<td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
-																	<td>Walk-In</td>
-																	<td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
+																	<td>{{department_tutors['firstName'] + " " + department_tutors['lastName']}}</td>
+                                                                    <td>8am - 2pm</td>
+																	<td>{{department_tutors['subjects'][0]}}</td>
+																	<td><a href="mailto:{{department_tutors['email']}}">Contact</a></td>
+                                                                    <td>Walk-In</td>
+
 																</tr>
-																<tr>
-																	<td>Emily F. Burns</td>
-																	<td>12/5 8am - 2pm</td>
-																	<td>Science</td>
-																	<td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
-																	<td>Walk-In</td>
-																	<td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
-																</tr>
-																<tr>
-																	<td>Andrew A. Stout</td>
-																	<td>12/5 8am - 2pm</td>
-																	<td>General</td>
-																	<td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
-																	<td>Appointment</td>
-																	<td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
-																</tr>
-																<tr>
-																	<td>Mary M. Bryan</td>
-																	<td>12/5 8am - 2pm</td>
-																	<td>Math</td>
-																	<td><span class=""><a href="https://www.google.com/maps/place/Dickinson+Hall,+Little+Rock,+AR+72204/data=!4m2!3m1!1s0x87d2a4f63ce5c489:0x588fbfa56eb50416?sa=X&ved=0ahUKEwi7w_2dmrLXAhVJilQKHd8YAUQQ8gEIJzAA"><i class="fa fa-map"></i></a> DKSN 324</span></td>
-																	<td>Walk-In</td>
-																	<td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
-																</tr>
-																<tr>
-																	<td>Mary A. Lewis</td>
-																	<td>12/5 8am - 2pm</td>
-																	<td>Writing</td>
-																	<td><span class=""><i class="fa fa-map"></i> DKSN 324</span></td>
-																	<td>Appointment</td>
-																	<td class=""><a class='btn btn-info btn-xs' href="#"><span class="fa fa-pencil"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="fa fa-times"></span> Remove</a></td>
-																</tr>
+
+																	{% endif %}
+
+																{% endfor %}
+
+
+
 															</tbody>
 														</table>
 													</div>

@@ -9,7 +9,7 @@ from flask_principal import Principal, Permission, RoleNeed, Identity, identity_
 from flask_admin import Admin, AdminIndexView, expose
 from app.userlogic import grab_all_tutors, grab_tutor_applications
 from app.auth import authenticate_user, login_user
-from app.forms.base_forms import TutorForm, LoginForm, RegistrationForm
+from app.forms.base_forms import TutorForm, LoginForm, RegistrationForm, AddTutorForm
 from flask import Flask, render_template, request, redirect, url_for, \
  session, json, flash, Response
 
@@ -63,9 +63,11 @@ def get_profile():
     # Grab User by username/Display Profile only if Auth = Current User Auth
 
     applications = grab_tutor_applications()
+    department_tutors = grab_all_tutors()
 
 
-    return render_template('profile.html', applications=applications)
+
+    return render_template('profile.html', applications=applications, department_tutors=department_tutors)
 
 # Refactor login, register, tutorapp instead of multiple calls to DB
 
@@ -87,19 +89,12 @@ def send_simple_message(body, subject):
 @login_required
 def tutorapp():
 
-    if session['role'] is 'admin' or session['role'] is 'tutor':
-        flash('You are already a tutor or admin')
-        return redirect(url_for('get_profile'))
-    else:
         form = TutorForm(request.form, csrf_enabled=False)
+
         if request.method == 'POST':
             if form.validate_on_submit():
 
-                user_email = form.email.data
-                user_first_name = form.firstName.data
-                user_last_name = form.lastName.data
-                user_name = user_first_name + " " + user_last_name
-                user_program = form.program.data
+                user_name = session['user_first_name'] + " " + session['user_last_name']
                 user_phone = form.phone.data
                 user_t_number = form.tnumber.data
                 user_gpa = str(form.gpa.data)
@@ -109,7 +104,7 @@ def tutorapp():
 
                 db = firebase.database()
 
-                data = {"name": user_name, "application_date": today, "gpa": user_gpa, "t_number": user_t_number, "phone": user_phone, "email": user_email, "approved": False, "subject": user_main_subject, "program": user_program}
+                data = {"name": user_name, "application_date": today, "gpa": user_gpa, "t_number": user_t_number, "phone": user_phone, "email": session['email'], "approved": False, "subject": user_main_subject, "program": session['program']}
                 db.child("tutorapplications").child(session['user_id']).set(data)
                 body = data
                 subject = 'New Tutor Application'
@@ -119,6 +114,35 @@ def tutorapp():
                 return redirect(url_for('get_profile'))
 
         return render_template('tutorapp.html', form=form)
+
+@app.route('/addtutor', methods=['GET', 'POST'])
+@login_required
+def addtutorapp():
+    form = AddTutorForm(request.form, csrf_enabled=False)
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user_name = form.username.data
+            user_password = form.password.data
+            user_email = form.email.data
+            user_first_name = form.firstName.data
+            user_last_name = form.lastName.data
+            user_phone = form.phone.data
+            user_main_subject = form.subjects.data
+            auth = firebase.auth()
+            db = firebase.database()
+            user = auth.create_user_with_email_and_password(user_email, user_password)
+
+            data = {"firstName": user_first_name, "lastName": user_last_name, "gpa": '', "t_number": '',
+                    "phone": user_phone, "email": user_email, "profileImage": '', "role": 'tutor', "isTutor": True, "isTutorVerified": True, "subjects": [user_main_subject],
+                    "program": session['program']}
+            db.child("users").child(user['localId']).set(data)
+
+    return render_template('addtutor.html', form=form)
+
+
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -137,24 +161,25 @@ def login():
                 account = auth.get_account_info(user['idToken'])
 
                 # Verify Firebase DB User Account
+                '''
                 if account['users'][0]['emailVerified'] is False:
                     flash('Your email is not verified, click here to resend', 'error')
                     auth.send_email_verification(user['idToken'])
+                '''
+                # Load User from DB & into Login-Manager
+                b = db.child("users").child(user['localId']).get()
 
-                else:
-                    # Load User from DB & into Login-Manager
-                    b = db.child("users").child(user['localId']).get()
-
-                    session['logged_in'] = True
-                    session['user_token'] = user['idToken']
-                    session['user_id'] = user['localId']
-                    session['user_first_name'] = b.val()['firstName']
-                    session['role'] = b.val()['role']
-                    session['email'] = b.val()['email']
-                    session['program'] = b.val()['program']
+                session['logged_in'] = True
+                session['user_token'] = user['idToken']
+                session['user_id'] = user['localId']
+                session['user_first_name'] = b.val()['firstName']
+                session['user_last_name'] = b.val()['lastName']
+                session['role'] = b.val()['role']
+                session['email'] = b.val()['email']
+                session['program'] = b.val()['program']
 
 
-                    return redirect('/')
+                return redirect('/')
 
             except requests.exceptions.HTTPError as e:
                 error_json = e.args[1]
@@ -198,7 +223,7 @@ def register():
             auth.send_email_verification(user['idToken'])
             data = {"email": user_email, "firstName": user_first_name, "role": 'user', "lastName": user_last_name,
             "userName": user_name, "profileImage": '',
-            "program": user_program, "subjects": ['None'], "isTutorVerified": False}
+            "program": user_program, "subjects": ['None'], "isTutorVerified": False, "isTutor": False}
             db.child("users").child(user['localId']).set(data)
 
             return redirect(url_for('login'))

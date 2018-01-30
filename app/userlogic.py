@@ -21,11 +21,8 @@ def grab_tutor_applications():
     applications = connected.child("tutorapplications").order_by_child("approved").equal_to(False).get()
 
     all_applications = [dict(user.val()) for user in applications.each()]
-    print(all_applications)
-
 
     return all_applications
-
 
 
 # Add Courses to My Profile
