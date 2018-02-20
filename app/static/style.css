@@ -9,6 +9,17 @@ body {
 	padding-top: 70px;
 }
 
+INPUT[type="text"] {
+  background: #FFFFFF;
+  border: 0;
+  border-bottom: 1px solid #c6c6c6;
+  border-radius: 0;
+  margin-bottom: 10px;
+  padding: 0;
+  text-indent: 10px;
+  width: 100%;
+}
+
 
 body a:link, a:hover, a:visited, a:visited {
 	color: black;

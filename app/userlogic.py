@@ -29,6 +29,10 @@ def grab_tutor_applications():
 def add_course_to_profile():
     pass
 
+def add_session():
+    pass
+
+
 #Approve Tutors from my Profile as Admin
 
 

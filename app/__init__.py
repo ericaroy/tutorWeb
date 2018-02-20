@@ -65,8 +65,6 @@ def get_profile():
     applications = grab_tutor_applications()
     department_tutors = grab_all_tutors()
 
-
-
     return render_template('profile.html', applications=applications, department_tutors=department_tutors)
 
 # Refactor login, register, tutorapp instead of multiple calls to DB
@@ -115,6 +113,7 @@ def tutorapp():
 
         return render_template('tutorapp.html', form=form)
 
+
 @app.route('/addtutor', methods=['GET', 'POST'])
 @login_required
 def addtutorapp():
@@ -139,10 +138,6 @@ def addtutorapp():
             db.child("users").child(user['localId']).set(data)
 
     return render_template('addtutor.html', form=form)
-
-
-
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
